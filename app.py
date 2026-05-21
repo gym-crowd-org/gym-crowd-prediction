@@ -3,6 +3,7 @@ import io
 import os
 import re
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import boto3
 import requests
@@ -40,7 +41,7 @@ def parse_gym_crowdness(html: str, timestamp: str) -> list[dict]:
 
 def lambda_handler(event, context):
     s3 = boto3.client("s3")
-    timestamp = datetime.now().isoformat()
+    timestamp = datetime.now(ZoneInfo("Asia/Singapore")).isoformat()
 
     # 1. Scrape the data
     response = requests.get(URL)
